@@ -44,7 +44,7 @@ xcodebuild -project BlueLink.xcodeproj -scheme BlueLink -destination 'platform=m
 - `Packages/BlueLinkCore`：Foundation-only 的领域状态、策略、协调器、端口与纯逻辑测试。禁止 import AppKit、SwiftUI、IOBluetooth、CoreAudio 等平台框架。
 - `Platform/MacIntegration`：IOBluetooth、AppKit/NSWorkspace、CoreGraphics、CoreAudio、ServiceManagement、配置存储与诊断适配，依赖 Core。
 - `Apps/MacApp`：Composition root、菜单栏与设置视图、本地化、App 级测试。视图只调用 `AppModel`，不持有蓝牙句柄。
-- `scripts/`：工程生成、构建、测试、边界检查、打包与文档检查。
+- `scripts/`：工程生成、构建、测试、边界检查、打包、发布说明生成与文档检查。
 - `.github/workflows/ci.yml`：在 macOS 上构建与打包；版本标签和手动触发会创建未签名 GitHub Release。
 - `branding/`：图标分层与品牌源文件。`docs/`：产品/工程规范、证据与截图。
 
@@ -85,7 +85,7 @@ swift test --package-path Platform/MacIntegration --filter RealDeviceTests
 
 - `scripts/package-dmg.sh` 生成 ad-hoc 本地产物，仅用于测试。它不是 Developer ID 签名，未公证，不能宣称 Gatekeeper 免提示。
 - `BlueLinkUpdateRepository` 指向 `mentalfl0w/BlueLink`。应用内更新检查读取最新公开 GitHub Release 并打开其页面，不会自动下载或安装。
-- 推送版本标签（例如 `v1.0.0`）会在构建、边界与文档检查通过后运行发布任务，将 DMG、ZIP 和 SHA256 作为未签名 GitHub Release 发布。手动 `workflow_dispatch` 使用显式版本执行同样流程。
+- 推送版本标签（例如 `v1.0.0`）会在构建、边界与文档检查通过后运行发布任务，将 DMG、ZIP 和 SHA256 作为未签名 GitHub Release 发布。发布说明由 `scripts/generate-release-notes.sh` 按 Conventional Commit 类型分组生成。手动 `workflow_dispatch` 使用显式版本执行同样流程。
 - 未经用户明确授权，不得使用 Developer ID 签名、公证、上传资产、创建 Release、推 tag 或操作远程主机。
 - 发布说明必须区分签名/公证状态与实测范围。
 
