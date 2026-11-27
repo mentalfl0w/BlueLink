@@ -113,21 +113,11 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout release history
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           name: BlueLink-unsigned
           path: dist
-
-      - name: Generate conventional release notes
-        env:
-          TAG: ${{ needs.build.outputs.tag }}
-        run: ./scripts/generate-release-notes.sh "$TAG" > "$RUNNER_TEMP/release-notes.md"
 
       - name: Publish GitHub Release
         env:
@@ -145,7 +135,7 @@ jobs:
             dist/*.sha256
             --title "BlueLink $VERSION"
             --target "$GITHUB_SHA"
-            --notes-file "$RUNNER_TEMP/release-notes.md"
+            --generate-notes
           )
           if [[ "$PRERELEASE" == "true" ]]; then
             args+=(--prerelease)
