@@ -73,9 +73,5 @@ Environment: macOS 27.3 (26C5047e), Xcode 27.2 (27B52), macOS 27.2 SDK, Swift 6.
 - Split the CI build and packaging steps. CI now builds the Release app once, then packages the existing product; `package-dmg.sh --no-build` avoids a second compile.
 - Fixed `build.sh` to build without `BLUELINK_VERSION`/`BLUELINK_BUILD_NUMBER`, and made SHA256 sidecars contain portable filenames instead of runner-specific absolute paths.
 - The update checker now falls back to the GitHub release page redirect when the unauthenticated Releases API is unavailable, so a 403 from the API does not block the update check.
-- Release notes are now generated from Conventional Commit subjects by `scripts/generate-release-notes.sh`; CI checks out full tag history and passes the grouped notes to `gh release create`.
+- Release notes use GitHub's generated notes from merged pull requests; CI publishes with `--generate-notes`. Changes now land through pull requests so they appear in the What's Changed section.
 - Bumped the app version to 1.0.1.
-
-## 2026-11-28 — 1.0.2
-
-- Published 1.0.2 with the new Conventional Commit release-note pipeline; no user-facing behavior changed from 1.0.1.
