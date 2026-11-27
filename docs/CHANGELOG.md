@@ -49,7 +49,7 @@ Environment: macOS 27.3 (26C5047e), Xcode 27.2 (27B52), macOS 27.2 SDK, Swift 6.
 
 - Display sleep/wake, system sleep, dark wake, and long-idle recovery were not tested on hardware (M02–M07, M10).
 - Login-item registration/restart in a signed bundle (M11), other input/audio devices (M12), actual audio output (M13), Finder/Dock 16/32 pt icons (M14), and idle resources (M15) remain open.
-- The artifact is ad-hoc signed, not Developer ID signed, and not notarized. No release was created or pushed.
+- The artifact is ad-hoc signed, not Developer ID signed, and not notarized. The first public release was published on 2026-11-28; see below.
 - macOS may hide the menu bar icon when the bar is crowded.
 
 ## 2026-11-28 — documentation and repository polish
@@ -66,3 +66,11 @@ Environment: macOS 27.3 (26C5047e), Xcode 27.2 (27B52), macOS 27.2 SDK, Swift 6.
 - Configured the update channel to the public `mentalfl0w/BlueLink` repository; the checker reads GitHub Releases and never downloads or installs automatically.
 - Added a tag/manual-dispatch release path to CI: version resolution, unsigned DMG/ZIP/SHA256 packaging, and GitHub Release publication after build, boundary, and documentation checks. Branch and pull-request runs remain read-only.
 - Created the public GitHub repository with the project description and topics for macOS, Swift, SwiftUI, Bluetooth, menu-bar apps, IOBluetooth, and desktop apps.
+- Published the first public release, `v1.0.0`.
+
+## 2026-11-28 — 1.0.1 fixes
+
+- Split the CI build and packaging steps. CI now builds the Release app once, then packages the existing product; `package-dmg.sh --no-build` avoids a second compile.
+- Fixed `build.sh` to build without `BLUELINK_VERSION`/`BLUELINK_BUILD_NUMBER`, and made SHA256 sidecars contain portable filenames instead of runner-specific absolute paths.
+- The update checker now falls back to the GitHub release page redirect when the unauthenticated Releases API is unavailable, so a 403 from the API does not block the update check.
+- Bumped the app version to 1.0.1.

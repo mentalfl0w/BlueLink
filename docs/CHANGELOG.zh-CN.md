@@ -50,7 +50,7 @@
 
 - 未实测息屏、亮屏、系统睡眠、dark wake、长时间闲置恢复（M02–M07、M10）。
 - 未验证签名包登录项注册/重启（M11）、其他输入设备/音频设备实机（M12）、音频输出设备实际出声（M13）、Finder/Dock 16/32 pt 图标（M14）、空闲资源（M15）。
-- 产物为 ad-hoc 签名，未 Developer ID 签名、未公证；未创建 Release、未推送。
+- 产物为 ad-hoc 签名，未 Developer ID 签名、未公证；首个公开版本已于 2026-11-28 发布，见下文。
 - 菜单栏拥挤时图标可能被 macOS 隐藏。
 
 ## 2026-11-28 — 文档与仓库整理
@@ -67,3 +67,11 @@
 - 更新通道指向公开仓库 `mentalfl0w/BlueLink`；检查器读取 GitHub Release，不自动下载或安装。
 - CI 增加标签/手动触发的发布路径：解析版本、打包未签名 DMG/ZIP/SHA256，并在构建、边界与文档检查通过后发布 GitHub Release。分支和 PR 运行保持只读。
 - 创建公开 GitHub 仓库，配置 macOS、Swift、SwiftUI、Bluetooth、菜单栏应用、IOBluetooth 与桌面应用 topics。
+- 发布首个公开版本 `v1.0.0`。
+
+## 2026-11-28 — 1.0.1 修复
+
+- CI 拆分构建与打包：先构建 Release app，再打包现有产物；`package-dmg.sh --no-build` 避免第二次编译。
+- 修复 `build.sh` 在未设置 `BLUELINK_VERSION`/`BLUELINK_BUILD_NUMBER` 时无法构建的问题；SHA256 sidecar 现在写入可移植文件名，不再包含 runner 绝对路径。
+- 更新检查在未认证 Releases API 不可用时回退到 GitHub Release 页面重定向，API 返回 403 不再直接导致检查失败。
+- 应用版本升至 1.0.1。
