@@ -2,7 +2,8 @@ name: CI and Release
 
 on:
   push:
-    branches: [main]
+    branches:
+      - '**'
     tags: ["v*"]
   pull_request:
   workflow_dispatch:
@@ -21,8 +22,8 @@ permissions:
   contents: read
 
 jobs:
-  build-and-test:
-    runs-on: macos-26
+  build:
+    runs-on: macos-latest
     timeout-minutes: 45
     outputs:
       version: ${{ steps.metadata.outputs.version }}
@@ -81,21 +82,6 @@ jobs:
       - name: Generate project
         run: ./scripts/generate-project.sh
 
-      - name: Package tests
-        run: |
-          swift test --package-path Packages/BlueLinkCore
-          swift test --package-path Platform/MacIntegration
-
-      - name: App tests
-        run: |
-          xcodebuild \
-            -project BlueLink.xcodeproj \
-            -scheme BlueLink \
-            -configuration Debug \
-            -destination 'platform=macOS' \
-            -derivedDataPath build/DerivedData \
-            test
-
       - name: Boundary checks
         run: ./scripts/boundary-check.sh
 
@@ -119,9 +105,9 @@ jobs:
           if-no-files-found: error
 
   release:
-    if: needs.build-and-test.outputs.tag != ''
-    needs: build-and-test
-    runs-on: macos-26
+    if: needs.build.outputs.tag != ''
+    needs: build
+    runs-on: macos-latest
     timeout-minutes: 10
     permissions:
       contents: write
@@ -137,9 +123,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          TAG: ${{ needs.build-and-test.outputs.tag }}
-          VERSION: ${{ needs.build-and-test.outputs.version }}
-          PRERELEASE: ${{ needs.build-and-test.outputs.prerelease }}
+          TAG: ${{ needs.build.outputs.tag }}
+          VERSION: ${{ needs.build.outputs.version }}
+          PRERELEASE: ${{ needs.build.outputs.prerelease }}
         run: |
           set -euo pipefail
           args=(

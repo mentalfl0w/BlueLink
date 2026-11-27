@@ -64,5 +64,5 @@ Environment: macOS 27.3 (26C5047e), Xcode 27.2 (27B52), macOS 27.2 SDK, Swift 6.
 - Re-rendered the Diagnostics screenshots through SwiftUI's environment locale so the English image no longer contains Chinese system values.
 - Updated verification and changelog counts for 19 App tests.
 - Configured the update channel to the public `mentalfl0w/BlueLink` repository; the checker reads GitHub Releases and never downloads or installs automatically.
-- Added a tag/manual-dispatch release path to CI: version resolution, unsigned DMG/ZIP/SHA256 packaging, and GitHub Release publication after the full test gate. Branch and pull-request runs remain read-only.
+- Added a tag/manual-dispatch release path to CI: version resolution, unsigned DMG/ZIP/SHA256 packaging, and GitHub Release publication after build, boundary, and documentation checks. Branch and pull-request runs remain read-only.
 - Created the public GitHub repository with the project description and topics for macOS, Swift, SwiftUI, Bluetooth, menu-bar apps, IOBluetooth, and desktop apps.

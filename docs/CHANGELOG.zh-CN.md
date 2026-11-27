@@ -65,5 +65,5 @@
 - 通过 SwiftUI 环境 locale 重新渲染诊断页截图，英文图不再出现中文系统状态。
 - 更新验收与变更日志：Platform 24 项（1 项跳过）、App 19 项。
 - 更新通道指向公开仓库 `mentalfl0w/BlueLink`；检查器读取 GitHub Release，不自动下载或安装。
-- CI 增加标签/手动触发的发布路径：解析版本、打包未签名 DMG/ZIP/SHA256，并在完整测试门禁通过后发布 GitHub Release。分支和 PR 运行保持只读。
+- CI 增加标签/手动触发的发布路径：解析版本、打包未签名 DMG/ZIP/SHA256，并在构建、边界与文档检查通过后发布 GitHub Release。分支和 PR 运行保持只读。
 - 创建公开 GitHub 仓库，配置 macOS、Swift、SwiftUI、Bluetooth、菜单栏应用、IOBluetooth 与桌面应用 topics。

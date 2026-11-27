@@ -45,7 +45,7 @@ xcodebuild -project BlueLink.xcodeproj -scheme BlueLink -destination 'platform=m
 - `Platform/MacIntegration`: IOBluetooth, AppKit/NSWorkspace, CoreGraphics, CoreAudio, ServiceManagement, configuration, and diagnostics adapters. It depends on Core.
 - `Apps/MacApp`: composition root, menu bar and Settings views, localization, and app-level tests. Views call `AppModel`; they never hold a Bluetooth handle.
 - `scripts/`: project generation, build, test, boundary checks, packaging, and docs checks.
-- `.github/workflows/ci.yml`: build and test on macOS; version tags and manual dispatch create unsigned GitHub Releases.
+- `.github/workflows/ci.yml`: build and package on macOS; version tags and manual dispatch create unsigned GitHub Releases.
 - `branding/`: icon layers and brand source assets. `docs/`: product and engineering guides, evidence, and screenshots.
 
 `scripts/boundary-check.sh` blocks UI/Bluetooth imports in Core, private APIs, `unchecked Sendable`, real Bluetooth addresses, and deployment-target drift. Never commit a real Bluetooth address. Tests use synthetic values such as `AA-BB-CC-DD-EE-FF`.
@@ -85,7 +85,7 @@ swift test --package-path Platform/MacIntegration --filter RealDeviceTests
 
 - `scripts/package-dmg.sh` creates an ad-hoc local artifact for testing. It is not a Developer ID build, is not notarized, and must not claim Gatekeeper approval.
 - `BlueLinkUpdateRepository` is `mentalfl0w/BlueLink`. The in-app checker reads the latest public GitHub Release and opens its page; it never downloads or installs automatically.
-- Pushing a version tag (`v1.0.0`) runs the release job after the full test gate. The job publishes the DMG, ZIP, and SHA256 files as an unsigned GitHub Release. A manual `workflow_dispatch` does the same with an explicit version.
+- Pushing a version tag (`v1.0.0`) runs the release job after the build and boundary/docs checks. The job publishes the DMG, ZIP, and SHA256 files as an unsigned GitHub Release. A manual `workflow_dispatch` does the same with an explicit version.
 - Do not use a Developer ID certificate, notarize, upload assets, create a release, push a tag, or operate a remote host without explicit user authorization.
 - Release notes must distinguish signing/notarization state from the scope of real-hardware testing.
 
