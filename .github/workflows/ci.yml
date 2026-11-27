@@ -79,20 +79,20 @@ jobs:
           brew install xcodegen
           xcodegen version
 
-      - name: Generate project
-        run: ./scripts/generate-project.sh
-
       - name: Boundary checks
         run: ./scripts/boundary-check.sh
 
       - name: Documentation checks
         run: ./scripts/check-docs.sh
 
-      - name: Package unsigned artifacts
+      - name: Build Release app
         env:
           BLUELINK_VERSION: ${{ steps.metadata.outputs.version }}
           BLUELINK_BUILD_NUMBER: ${{ steps.metadata.outputs.build }}
-        run: ./scripts/package-dmg.sh
+        run: ./scripts/build.sh Release
+
+      - name: Package unsigned artifacts
+        run: ./scripts/package-dmg.sh --no-build
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4

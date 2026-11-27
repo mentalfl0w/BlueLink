@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 # Creates unsigned/ad-hoc local distribution artifacts. It never signs with a
 # Developer ID, never notarizes and never publishes.
-# Usage: scripts/package-dmg.sh
+# Usage: scripts/package-dmg.sh [--no-build]
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-"$ROOT/scripts/build.sh" Release
+if [[ "${1:-}" == "--no-build" ]]; then
+  shift
+else
+  "$ROOT/scripts/build.sh" Release
+fi
 
 APP="$ROOT/build/DerivedData/Build/Products/Release/BlueLink.app"
 VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP/Contents/Info.plist")"
@@ -31,8 +35,11 @@ hdiutil create \
 
 ditto -c -k --keepParent "$APP" "$ZIP"
 
-shasum -a 256 "$DMG" > "$DMG.sha256"
-shasum -a 256 "$ZIP" > "$ZIP.sha256"
+(
+  cd "$DIST"
+  shasum -a 256 "$(basename "$DMG")" > "$(basename "$DMG").sha256"
+  shasum -a 256 "$(basename "$ZIP")" > "$(basename "$ZIP").sha256"
+)
 
 echo "Created:"
 echo "  $DMG"

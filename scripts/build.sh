@@ -17,13 +17,23 @@ if [[ -n "${BLUELINK_BUILD_NUMBER:-}" ]]; then
   BUILD_SETTINGS+=("CURRENT_PROJECT_VERSION=$BLUELINK_BUILD_NUMBER")
 fi
 
-xcodebuild \
-  -project BlueLink.xcodeproj \
-  -scheme BlueLink \
-  -configuration "$CONFIGURATION" \
-  -derivedDataPath build/DerivedData \
-  -destination 'platform=macOS' \
-  "${BUILD_SETTINGS[@]}" \
-  build
+if [[ ${#BUILD_SETTINGS[@]} -gt 0 ]]; then
+  xcodebuild \
+    -project BlueLink.xcodeproj \
+    -scheme BlueLink \
+    -configuration "$CONFIGURATION" \
+    -derivedDataPath build/DerivedData \
+    -destination 'platform=macOS' \
+    "${BUILD_SETTINGS[@]}" \
+    build
+else
+  xcodebuild \
+    -project BlueLink.xcodeproj \
+    -scheme BlueLink \
+    -configuration "$CONFIGURATION" \
+    -derivedDataPath build/DerivedData \
+    -destination 'platform=macOS' \
+    build
+fi
 
 echo "Built $(find build/DerivedData/Build/Products/"$CONFIGURATION" -maxdepth 1 -name BlueLink.app -print -quit)"
