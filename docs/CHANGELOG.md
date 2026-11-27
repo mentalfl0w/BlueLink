@@ -75,3 +75,7 @@ Environment: macOS 27.3 (26C5047e), Xcode 27.2 (27B52), macOS 27.2 SDK, Swift 6.
 - The update checker now falls back to the GitHub release page redirect when the unauthenticated Releases API is unavailable, so a 403 from the API does not block the update check.
 - Release notes are now generated from Conventional Commit subjects by `scripts/generate-release-notes.sh`; CI checks out full tag history and passes the grouped notes to `gh release create`.
 - Bumped the app version to 1.0.1.
+
+## 2026-11-28 — 1.0.2
+
+- Published 1.0.2 with the new Conventional Commit release-note pipeline; no user-facing behavior changed from 1.0.1.

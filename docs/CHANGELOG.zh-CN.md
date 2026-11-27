@@ -76,3 +76,7 @@
 - 更新检查在未认证 Releases API 不可用时回退到 GitHub Release 页面重定向，API 返回 403 不再直接导致检查失败。
 - 发布说明改由 `scripts/generate-release-notes.sh` 按 Conventional Commit 类型生成；CI 在 release job 拉取完整标签历史并传给 `gh release create`。
 - 应用版本升至 1.0.1。
+
+## 2026-11-28 — 1.0.2
+
+- 发布 1.0.2，验证新的 Conventional Commit 发布说明流水线；相对 1.0.1 无用户可见行为变化。
