@@ -1,9 +1,20 @@
 import Foundation
 
-public enum UpdateCheckError: Error, Equatable, Sendable {
+public enum UpdateCheckError: Error, Equatable, Sendable, LocalizedError {
     case notConfigured
     case invalidResponse
     case network(String)
+
+    public var errorDescription: String? {
+        switch self {
+        case .notConfigured:
+            "Update channel not configured"
+        case .invalidResponse:
+            "Invalid update response"
+        case .network(let message):
+            "Network error: \(message)"
+        }
+    }
 }
 
 public struct UpdateRelease: Equatable, Sendable {
@@ -39,17 +50,61 @@ public struct UpdateChecker: Sendable {
         request.setValue("BlueLink-macOS", forHTTPHeaderField: "User-Agent")
         request.timeoutInterval = 20
 
-        let data: Data
-        let response: URLResponse
         do {
-            (data, response) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
+                throw UpdateCheckError.invalidResponse
+            }
+            return Self.newestRelease(from: data, currentVersion: currentVersion)
+        } catch let error as UpdateCheckError where error != .notConfigured {
+            return try await latestReleaseFromWebPage(currentVersion: currentVersion)
         } catch {
             throw UpdateCheckError.network(error.localizedDescription)
         }
-        guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
+    }
+
+    /// GitHub's release page redirects to the latest published tag and is not
+    /// subject to the unauthenticated API rate limit. It is a fallback only;
+    /// the API supplies release notes when it is available.
+    private func latestReleaseFromWebPage(currentVersion: String) async throws -> UpdateRelease? {
+        guard let repository,
+              let url = URL(string: "https://github.com/\(repository)/releases/latest") else {
             throw UpdateCheckError.invalidResponse
         }
-        return Self.newestRelease(from: data, currentVersion: currentVersion)
+        var request = URLRequest(url: url)
+        request.setValue("BlueLink-macOS", forHTTPHeaderField: "User-Agent")
+        request.timeoutInterval = 20
+
+        let response: URLResponse
+        do {
+            (_, response) = try await URLSession.shared.data(for: request)
+        } catch {
+            throw UpdateCheckError.network(error.localizedDescription)
+        }
+        guard let http = response as? HTTPURLResponse,
+              (200..<300).contains(http.statusCode),
+              let finalURL = http.url,
+              let tag = Self.tagName(fromReleaseURL: finalURL) else {
+            throw UpdateCheckError.invalidResponse
+        }
+        let number = VersionNumber(tag)
+        guard number > VersionNumber(currentVersion) else { return nil }
+        return UpdateRelease(
+            version: number.description,
+            name: number.description,
+            notes: "",
+            pageURL: finalURL
+        )
+    }
+
+    static func tagName(fromReleaseURL url: URL) -> String? {
+        let components = url.pathComponents
+        guard let tagIndex = components.firstIndex(of: "tag"),
+              components.indices.contains(tagIndex + 1) else {
+            return nil
+        }
+        let tag = components[tagIndex + 1]
+        return tag.isEmpty ? nil : tag
     }
 
     /// Pure parser shared with tests.

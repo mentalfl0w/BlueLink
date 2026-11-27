@@ -326,7 +326,7 @@ final class AppModel {
         } catch {
             availableUpdate = nil
             updateMessage = String(localized: "Couldn't check for updates")
-            diagnostics.record(.update, String(localized: "update check failed"))
+            diagnostics.record(.update, "update check failed: \(error.localizedDescription)")
         }
     }
 

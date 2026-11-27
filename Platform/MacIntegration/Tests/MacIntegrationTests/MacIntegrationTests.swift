@@ -100,6 +100,12 @@ final class UpdateCheckerTests: XCTestCase {
         XCTAssertNil(UpdateChecker.newestRelease(from: Data("{}".utf8), currentVersion: "1.0"))
     }
 
+    func testReleasePageRedirectTagIsParsed() {
+        let url = URL(string: "https://github.com/mentalfl0w/BlueLink/releases/tag/v1.3.0")!
+        XCTAssertEqual(UpdateChecker.tagName(fromReleaseURL: url), "v1.3.0")
+        XCTAssertNil(UpdateChecker.tagName(fromReleaseURL: URL(string: "https://github.com/mentalfl0w/BlueLink/releases")!))
+    }
+
     func testVersionComparison() {
         XCTAssertLessThan(VersionNumber("1.2.9"), VersionNumber("1.2.10"))
         XCTAssertEqual(VersionNumber("v1.2"), VersionNumber("1.2.0"))
