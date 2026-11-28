@@ -30,5 +30,17 @@
 	<string>BlueLink connects and disconnects the Bluetooth devices you choose.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>MIT License · © 2026 Dylan Liu</string>
+	<key>SUFeedURL</key>
+	<string>https://github.com/mentalfl0w/BlueLink/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>ZA+az1CkNnvjCM1YKobsrnREcJWED5smqyNdMXxzZZc=</string>
+	<key>SUEnableAutomaticChecks</key>
+	<false/>
+	<key>SUAutomaticallyUpdate</key>
+	<false/>
+	<key>SURequireSignedFeed</key>
+	<true/>
+	<key>SUVerifyUpdateBeforeExtraction</key>
+	<true/>
 </dict>
 </plist>
