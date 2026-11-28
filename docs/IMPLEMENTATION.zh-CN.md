@@ -47,7 +47,7 @@ Core 实现 CONNECTION_POLICY，注入假时钟和蓝牙客户端，先覆盖快
 |---|---|---|
 | Phase A | 完成 | 环境/API 探测；XcodeGen 工程可生成、构建；`.icon` 编译并渲染多外观；Core/Platform 包骨架与测试可运行 |
 | Phase B | 完成 | 策略表、协调器、重试、配置、IOBluetooth/显示/系统事件适配；App 设备选择、手动操作、暂停；44 Core + 24 Platform 测试通过（1 项硬件测试跳过） |
-| Phase C | 完成 | 设置、登录项、音频路由、诊断、更新检查占位、中英文、真实图标、菜单栏模板、设置/添加设备毛玻璃窗口；19 App 测试通过 |
+| Phase C | 完成 | 设置、登录项、音频路由、诊断、Sparkle 自动更新（默认关闭）、中英文、真实图标、菜单栏模板、设置/添加设备毛玻璃窗口；App 测试通过 |
 | Phase D | 完成（范围见限制） | `./scripts/test.sh` 全绿；M01 实机通过；DMG/ZIP + SHA256 生成并挂载核对；README/CONTRIBUTING/DECISIONS/CHANGELOG/VERIFICATION 更新 |
 
 未完成/未验证项与原因见 `docs/VERIFICATION.md`：真实息屏/亮屏与睡眠（M02–M07、M10）、登录项重启（M11）、其他输入设备（M12）、实际出声（M13）、Finder/Dock 小尺寸（M14）、空闲资源采样（M15）。ad-hoc 产物未签名分发、未公证、未发布。

@@ -34,4 +34,6 @@ Observe permission and Bluetooth power only through public interfaces verified w
 
 CoreAudio HAL: enumerate output devices, observe device-list and default-output changes, read `AudioDeviceUID`, transport type, and output capability, and verify the match. If a reliable Bluetooth-address mapping is unavailable, let the user choose the UID; never guess by name. Set the default output through public properties such as `kAudioHardwarePropertyDefaultOutputDevice`; show failures independently. Use `SMAppService.mainApp` for login-item registration, unregistration, status, and `requiresApproval`; do not hand-write a LaunchDaemon.
 
+Updates use Sparkle 2.10.1 and its EdDSA-signed appcast over HTTPS. The public key is in `Info.plist`; the private key stays in the CI secret store. `SURequireSignedFeed` and `SUVerifyUpdateBeforeExtraction` prevent unsigned or tampered feeds from being extracted. Do not add a second custom downloader or install path.
+
 Use OSLog categories `system`, `bluetooth`, `coordinator`, `audio`, and `update`, with privacy annotations or shortened identifiers. Diagnostics show and export sanitized state and a bounded recent log from the normal UI only. Never upload logs or read a private database.

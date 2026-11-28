@@ -11,7 +11,7 @@
 - **ADR-007 Accepted**：`.icon` 的深色/着色/透明外观由系统派生，不单独烘焙。后层丝带使用 `opacity: 0.72`，避免系统深色/着色外观把前后层压成同一平面；三种外观下均保留层次。默认外观不透明度仍为 1。
 - **ADR-008 Accepted**：本地化使用 `Localizable.xcstrings` 与 `InfoPlist.xcstrings`，源语言英文，交付 zh-Hans。禁止用动态 `Text(String)` 承载需要翻译的字面量；条件文案、`.help`、错误摘要使用 `LocalizedStringKey`/`LocalizedStringResource`。App 测试检查代表性键、插值格式与 Info.plist 文案，防止字符串目录漂移。
 - **ADR-009 Accepted**：诊断日志仅本地写入，默认脱敏蓝牙地址与设备标识；导出为纯文本。日志消息是 App 自有文案，随界面本地化；底层系统错误保留系统语言/技术原文并标记为系统错误，不做二次猜测翻译。
-- **ADR-010 Accepted**：更新检查保持关闭。未配置 `BlueLinkUpdateRepository` 时不发起网络请求，不伪造 GitHub URL、版本号或发布状态；手动检查按钮在未配置时禁用并说明原因。
+- **ADR-010 Superseded by ADR-019**：原始的手动更新检查保留为没有 Sparkle 密钥时的回退。缺少 `BlueLinkUpdateRepository` 或有效 `SUPublicEDKey` 时禁用 Sparkle，不使用签名更新源。
 - **ADR-011 Accepted**：UI 快照测试使用 `NSHostingView` + `cacheDisplay` 离屏渲染真实视图，仅存在于测试目标；产品不添加调试窗口、测试入口或假数据。文档中的菜单栏与设置截图均标注为离屏渲染。
 - **ADR-012 Accepted**：菜单栏项遵循 macOS 溢出规则，不额外创建常驻窗口或 Dock 图标来规避隐藏。菜单栏过满时用户可能看不到入口；该行为记录为已知限制，不用非公开 API 强制置顶。
 - **ADR-013 Accepted**：真实硬件测试必须显式设置 `BLUELINK_REAL_DEVICE=1`，设备 ID/名称从环境读取；默认测试跳过。测试进入时记录连接状态，结束时恢复，避免改变用户当前音频/连接状态。
@@ -20,6 +20,7 @@
 - **ADR-016 Accepted**：设置窗口由 `openSettings` 打开后，显式激活 App 并 `makeKeyAndOrderFront`/`orderFrontRegardless`。Settings 视图用 `NSViewRepresentable` 给宿主窗口打上稳定标识，既能在首次出现时提升，也能在窗口已存在时由菜单按钮再次置前。跨应用前台切换仍受系统激活策略约束，未使用私有 API。
 - **ADR-017 Accepted**：关于页展示作者 Dylan Liu 的公开 GitHub 信息（头像、邮箱、GitHub 链接）。头像使用与 Daybreak 相同的公开 GitHub 地址，并内置同一图片作为离线回退，避免网络失败时显示首字母占位。版权文本为 © 2026 Dylan Liu；MIT 许可与 Info.plist 版权字段保持一致。
 - **ADR-018 Accepted**：设置窗口与“添加设备”sheet 使用 `NSVisualEffectView`（`.underWindowBackground`、`.behindWindow`、`.active`）提供原生毛玻璃背景；宿主窗口设为非不透明、背景透明，Form 的滚动背景隐藏。Reduce Transparency 时回退为不透明 `windowBackgroundColor`，Increase Contrast 时叠加语义色。菜单栏设备列表因 `MenuBarExtra` 不给裸 `ScrollView` 固有高度，按设备数计算 72–322 pt 固定高度，超出滚动；engine 状态未就绪时显示加载占位，避免中间区域塌缩成空白。
+- **ADR-019 Accepted**：通过 Swift Package Manager 集成 Sparkle 2.10.1，用于签名自动更新。稳定更新源为 `https://github.com/mentalfl0w/BlueLink/releases/latest/download/appcast.xml`；启用 `SURequireSignedFeed` 与 `SUVerifyUpdateBeforeExtraction`，EdDSA 公钥嵌入 Info.plist。私钥只存在于 GitHub Actions 的 `SPARKLE_EDDSA_PRIVATE_KEY_BASE64` secret 与维护者的安全本地存储中，绝不提交到仓库。CI 从 Release ZIP 生成并校验 `appcast.xml`，且只随稳定版上传。自动检查与自动下载默认关闭，由设置页开关显式开启；Sparkle 可在后台下载，并在 BlueLink 退出前询问是否安装。App 仍为 ad-hoc 签名，Developer ID 签名和公证属于独立的分发工作。
 
 ## Reference snapshot
 
@@ -32,4 +33,4 @@
 - 蓝牙 TCC 授权在 ad-hoc 签名变化后的持久性。
 - 实际音频播放与首选输出切换的端到端效果。
 - 菜单栏拥挤导致入口不可见时的产品级缓解方式（不引入私有 API）。
-- 更新仓库地址与正式分发签名条件；确定前不启用更新。
+- Developer ID 签名、公证与非 ad-hoc 更新信任链仍未确定；在正式发布构建上完成 Sparkle 安装验证前，不宣称具备分发条件。

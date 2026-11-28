@@ -48,7 +48,7 @@ Implement `CONNECTION_POLICY` in Core with a fake clock and Bluetooth client. Co
 
 ## Phase C — productization
 
-Complete Settings, permission and launch-at-login handling, optional preferred audio (off by default), localization, diagnostics, native appearance, real Icon Composer icon, and menu bar template. Exercise the full UI once; save real screenshots when available. Update checks stay disabled until a release repository is configured; use the GitHub Releases API with semantic version comparison and explicit network/error states. Do not invent remote URLs, versions, or release state. An ad-hoc build may offer a release download link but must not silently replace itself. Automatic installation requires signing and update-security prerequisites, with a separate ADR.
+Complete Settings, permission and launch-at-login handling, optional preferred audio (off by default), localization, diagnostics, native appearance, real Icon Composer icon, and menu bar template. Exercise the full UI once; save real screenshots when available. Updates use Sparkle 2.10.1 against a signed stable GitHub appcast; automatic checks and downloads are off until the user enables them. The manual GitHub Releases checker remains a fallback for builds without a Sparkle key. Do not invent remote URLs, versions, or release state. CI generates and validates the signed appcast from the release ZIP; an ad-hoc build is not a Developer ID distribution build. See ADR-019.
 
 ## Phase D — QA and delivery
 

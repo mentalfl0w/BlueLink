@@ -84,8 +84,9 @@ swift test --package-path Platform/MacIntegration --filter RealDeviceTests
 ## Packaging, signing, and releases
 
 - `scripts/package-dmg.sh` creates an ad-hoc local artifact for testing. It is not a Developer ID build, is not notarized, and must not claim Gatekeeper approval.
-- `BlueLinkUpdateRepository` is `mentalfl0w/BlueLink`. The in-app checker reads the latest public GitHub Release and opens its page; it never downloads or installs automatically.
-- Pushing a version tag (`v1.0.0`) runs the release job after the build and boundary/docs checks. The job publishes the DMG, ZIP, and SHA256 files as an unsigned GitHub Release. Release notes are GitHub's generated notes from merged pull requests; land changes through PRs so they appear there. A manual `workflow_dispatch` does the same with an explicit version.
+- `BlueLinkUpdateRepository` is `mentalfl0w/BlueLink`. Sparkle uses the stable feed `https://github.com/mentalfl0w/BlueLink/releases/latest/download/appcast.xml`; automatic checks and downloads are off until the user enables them in Settings. Builds without a valid Sparkle key fall back to the manual GitHub Releases checker.
+- Pushing a stable version tag runs the release job after the build and boundary/docs checks. For stable releases, CI generates and validates `appcast.xml` from the ZIP and publishes the DMG, ZIP, SHA256 files, and appcast. The EdDSA private key must be in the `SPARKLE_EDDSA_PRIVATE_KEY_BASE64` repository secret; never commit it. Rotate the embedded public key and the release script's expected key together. Release notes are GitHub's generated notes from merged pull requests; land changes through PRs so they appear there. A manual `workflow_dispatch` does the same with an explicit version.
+- Pre-release tags skip appcast generation so `releases/latest/download/appcast.xml` always points to a stable release.
 - Do not use a Developer ID certificate, notarize, upload assets, create a release, push a tag, or operate a remote host without explicit user authorization.
 - Release notes must distinguish signing/notarization state from the scope of real-hardware testing.
 

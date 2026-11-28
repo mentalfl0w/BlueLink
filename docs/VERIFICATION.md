@@ -24,12 +24,20 @@ Run all commands from the repository root.
 |---|---|
 | `swift test --package-path Packages/BlueLinkCore` | 44 passed, 0 failed |
 | `swift test --package-path Platform/MacIntegration` | 24 ran: 23 passed, 1 hardware test skipped by design |
-| `xcodebuild test -project BlueLink.xcodeproj -scheme BlueLink -destination 'platform=macOS'` | 19 passed (8 presentation, 4 localization, 7 UI/window) |
+| `xcodebuild test -project BlueLink.xcodeproj -scheme BlueLink -destination 'platform=macOS' -derivedDataPath /tmp/bluelink-dd` | 21 passed (8 presentation, 4 localization, 2 Sparkle configuration, 7 UI/window) |
 | `./scripts/test.sh` | All above plus boundary and docs checks passed |
 | `./scripts/boundary-check.sh` | Passed: no forbidden imports, private APIs, `unchecked Sendable`, real Bluetooth addresses, or deployment drift |
 | `./scripts/check-docs.sh` | Passed: 11 bilingual pairs, 14 screenshots, 23 Markdown files, no broken local links |
 | `./scripts/package-dmg.sh` | Release build succeeded; DMG 3.6 MB, ZIP 3.2 MB, SHA256 generated |
 | DMG mount check | `BlueLink.app` 1.0.0 (1), `LSMinimumSystemVersion=26.0`, `LSUIElement=true`, ad-hoc signature, detached cleanly |
+| `scripts/prepare-sparkle-release.sh` (local 1.0.1 build) | Sparkle 2.10.1 resolved; signed appcast generated; EdDSA signature and appcast metadata validated |
+
+### Update delivery (2026-11-28)
+
+- Sparkle 2.10.1 is embedded in the Release app; `SUFeedURL`, `SUPublicEDKey`, `SURequireSignedFeed`, and `SUVerifyUpdateBeforeExtraction` are present in the built Info.plist. The XcodeGen project was regenerated.
+- The appcast generator produced exactly one update item for `BlueLink-1.0.1-2.zip` with the expected enclosure URL, build number, and full release-notes URL. `verify-sparkle-appcast.swift` accepted the EdDSA signature against the embedded public key.
+- Not tested: installation from the published `releases/latest/download/appcast.xml`, Sparkle's live download/quit prompt, and update behavior for a signed/notarized distribution build. No release was published for this change.
+- The published 1.0.0/1.0.1 builds predate Sparkle; the first Sparkle-enabled release must be installed manually before automatic updates can work.
 
 Coverage:
 
