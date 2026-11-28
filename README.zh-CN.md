@@ -114,7 +114,7 @@ swift test --package-path Platform/MacIntegration --filter RealDeviceTests
 |---|---|
 | Core（`Packages/BlueLinkCore`） | 44 项测试通过 |
 | Platform（`Platform/MacIntegration`） | 24 项执行：23 项通过，1 项硬件测试默认跳过 |
-| App（`Apps/MacApp`） | 19 项通过（状态呈现、本地化、窗口与快照） |
+| App（`Apps/MacApp`） | 21 项通过（状态呈现、本地化、Sparkle 配置、窗口与快照） |
 | 实机 M01 | 通过：已配对测试设备的手动连接、断开与再次连接，5.976 s |
 | 分发 | ad-hoc 本地 DMG/ZIP + SHA256；未 Developer ID 签名、未公证 |
 

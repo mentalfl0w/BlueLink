@@ -25,11 +25,11 @@
 | `swift test --package-path Packages/BlueLinkCore` | 44 项通过，0 失败 |
 | `swift test --package-path Platform/MacIntegration` | 24 项执行：23 项通过，1 项硬件测试按设计跳过 |
 | `xcodebuild test -project BlueLink.xcodeproj -scheme BlueLink -destination 'platform=macOS' -derivedDataPath /tmp/bluelink-dd` | 21 项通过（状态呈现 8、本地化 4、Sparkle 配置 2、UI 渲染/窗口 7） |
-| `./scripts/test.sh` | 上述全部 + 边界与文档检查通过 |
+| `./scripts/test.sh` | Core、Platform 与 App 21 项测试通过；边界与文档检查通过 |
 | `./scripts/boundary-check.sh` | 通过：无禁止 import、私有 API、`unchecked Sendable`、真实蓝牙地址或部署版本漂移 |
 | `./scripts/check-docs.sh` | 通过：中英文文档成对、关键截图存在、无失效本地链接 |
-| `./scripts/package-dmg.sh` | Release 构建成功；DMG 3.6 MB、ZIP 3.2 MB 及 SHA256 生成 |
-| DMG 挂载检查 | `BlueLink.app` 版本 1.0.0（1），`LSMinimumSystemVersion=26.0`，`LSUIElement=true`，ad-hoc 签名，已卸载 |
+| `./scripts/package-dmg.sh` | Release 构建成功；DMG 4.6 MB、ZIP 4.2 MB 及 SHA256 生成；解压 ZIP 后 App 通过 `codesign --verify --deep --strict` |
+| DMG 挂载检查 | `BlueLink.app` 版本 1.0.1（2），`LSMinimumSystemVersion=26.0`，`LSUIElement=true`，ad-hoc 签名，已卸载 |
 | `scripts/prepare-sparkle-release.sh`（本地 1.0.1 构建） | Sparkle 2.10.1 解析成功；生成签名 appcast；EdDSA 签名与 appcast 元数据校验通过 |
 
 ### 更新分发（2026-11-28）

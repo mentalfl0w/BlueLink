@@ -25,11 +25,11 @@ Run all commands from the repository root.
 | `swift test --package-path Packages/BlueLinkCore` | 44 passed, 0 failed |
 | `swift test --package-path Platform/MacIntegration` | 24 ran: 23 passed, 1 hardware test skipped by design |
 | `xcodebuild test -project BlueLink.xcodeproj -scheme BlueLink -destination 'platform=macOS' -derivedDataPath /tmp/bluelink-dd` | 21 passed (8 presentation, 4 localization, 2 Sparkle configuration, 7 UI/window) |
-| `./scripts/test.sh` | All above plus boundary and docs checks passed |
+| `./scripts/test.sh` | Core, Platform, and 21 App tests passed; boundary and docs checks passed |
 | `./scripts/boundary-check.sh` | Passed: no forbidden imports, private APIs, `unchecked Sendable`, real Bluetooth addresses, or deployment drift |
 | `./scripts/check-docs.sh` | Passed: 11 bilingual pairs, 14 screenshots, 23 Markdown files, no broken local links |
-| `./scripts/package-dmg.sh` | Release build succeeded; DMG 3.6 MB, ZIP 3.2 MB, SHA256 generated |
-| DMG mount check | `BlueLink.app` 1.0.0 (1), `LSMinimumSystemVersion=26.0`, `LSUIElement=true`, ad-hoc signature, detached cleanly |
+| `./scripts/package-dmg.sh` | Release build succeeded; DMG 4.6 MB, ZIP 4.2 MB, SHA256 generated; extracted ZIP app passes `codesign --verify --deep --strict` |
+| DMG mount check | `BlueLink.app` 1.0.1 (2), `LSMinimumSystemVersion=26.0`, `LSUIElement=true`, ad-hoc signature, detached cleanly |
 | `scripts/prepare-sparkle-release.sh` (local 1.0.1 build) | Sparkle 2.10.1 resolved; signed appcast generated; EdDSA signature and appcast metadata validated |
 
 ### Update delivery (2026-11-28)

@@ -29,7 +29,7 @@ BlueLink 1.0.0 已实现并完成本地构建验证。自动化测试与实机 M
 ./scripts/package-dmg.sh
 ```
 
-当前结果：Core 44 项通过；Platform 24 项执行、23 项通过、1 项硬件测试按设计跳过；App 19 项通过；边界与文档检查通过。实机 M01 单独通过。环境与证据见[验收矩阵](VERIFICATION.zh-CN.md)。
+当前结果：Core 44 项通过；Platform 24 项执行、23 项通过、1 项硬件测试按设计跳过；App 21 项通过；边界与文档检查通过。实机 M01 单独通过。环境与证据见[验收矩阵](VERIFICATION.zh-CN.md)。
 
 ## 截图
 

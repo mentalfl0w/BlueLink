@@ -114,7 +114,7 @@ Run it only for a device you are authorized to connect and disconnect.
 |---|---|
 | Core (`Packages/BlueLinkCore`) | 44 tests pass |
 | Platform (`Platform/MacIntegration`) | 24 tests run: 23 pass, 1 hardware test skipped by default |
-| App (`Apps/MacApp`) | 19 tests pass (presentation, localization, window and snapshot tests) |
+| App (`Apps/MacApp`) | 21 tests pass (presentation, localization, Sparkle configuration, window and snapshot tests) |
 | Real hardware M01 | Passed: manual connect, disconnect, and reconnect of a paired test device, 5.976 s |
 | Distribution | Ad-hoc local DMG/ZIP, SHA256; not Developer ID signed or notarized |
 
