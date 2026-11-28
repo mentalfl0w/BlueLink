@@ -84,8 +84,9 @@ swift test --package-path Platform/MacIntegration --filter RealDeviceTests
 ## 打包、签名与发布
 
 - `scripts/package-dmg.sh` 生成 ad-hoc 本地产物，仅用于测试。它不是 Developer ID 签名，未公证，不能宣称 Gatekeeper 免提示。
-- `BlueLinkUpdateRepository` 指向 `mentalfl0w/BlueLink`。应用内更新检查读取最新公开 GitHub Release 并打开其页面，不会自动下载或安装。
-- 推送版本标签（例如 `v1.0.0`）会在构建、边界与文档检查通过后运行发布任务，将 DMG、ZIP 和 SHA256 作为未签名 GitHub Release 发布。发布说明使用 GitHub 从已合并 PR 生成的 What's Changed；改动应通过 PR 合入。手动 `workflow_dispatch` 使用显式版本执行同样流程。
+- `BlueLinkUpdateRepository` 指向 `mentalfl0w/BlueLink`。Sparkle 使用稳定更新源 `https://github.com/mentalfl0w/BlueLink/releases/latest/download/appcast.xml`；自动检查和下载默认关闭，用户在设置中开启。没有有效 Sparkle 密钥的构建回退到手动 GitHub Releases 检查。
+- 推送稳定版本标签会在构建、边界与文档检查通过后运行发布任务。稳定版会从 ZIP 生成并校验 `appcast.xml`，与 DMG、ZIP、SHA256 一同发布。EdDSA 私钥必须保存在仓库 secret `SPARKLE_EDDSA_PRIVATE_KEY_BASE64`，绝不提交。发布说明使用 GitHub 从已合并 PR 生成的 What's Changed；改动应通过 PR 合入。手动 `workflow_dispatch` 使用显式版本执行同样流程。
+- 预发布标签不生成 appcast，保证 `releases/latest/download/appcast.xml` 始终指向稳定版。
 - 未经用户明确授权，不得使用 Developer ID 签名、公证、上传资产、创建 Release、推 tag 或操作远程主机。
 - 发布说明必须区分签名/公证状态与实测范围。
 

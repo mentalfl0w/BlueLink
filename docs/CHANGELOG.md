@@ -2,6 +2,22 @@
 
 [简体中文](CHANGELOG.zh-CN.md) · [Documentation](README.md)
 
+## 2026-11-28 — signed Sparkle updates
+
+### Changed
+
+- Integrated Sparkle 2.10.1 through Swift Package Manager. `Info.plist` now points at the stable signed feed `https://github.com/mentalfl0w/BlueLink/releases/latest/download/appcast.xml`, embeds the EdDSA public key, requires a signed feed, and verifies updates before extraction.
+- Added automatic update checks and automatic background downloads as opt-in Settings toggles. Both default to off; Sparkle asks before installing when BlueLink quits. The manual GitHub Releases checker remains as a fallback for builds without a Sparkle key.
+- Release CI now generates and validates a signed `appcast.xml` from the release ZIP, and publishes it only with stable releases. The private EdDSA key is stored in the `SPARKLE_EDDSA_PRIVATE_KEY_BASE64` repository secret and never committed.
+- Updated the English and Chinese README, contributing guide, product design, platform integration, implementation notes, decisions (ADR-019), and localization.
+- Bumped the app to 1.0.2 (build 3) as the first Sparkle-enabled release.
+
+### Verification
+
+- `scripts/prepare-sparkle-release.sh` generated a signed appcast from the local 1.0.1 build ZIP and the EdDSA public/private key pair; `verify-sparkle-appcast.swift` accepted the signature.
+- `xcodebuild` Release build and `scripts/package-dmg.sh` succeeded with the Sparkle framework embedded.
+- `./scripts/test.sh` passed: 44 Core tests, 24 Platform tests (one hardware test skipped), 21 App tests, boundary checks, and documentation checks. Live installation from the published appcast is not tested. The published 1.0.0/1.0.1 releases predate Sparkle, so the first Sparkle-enabled build must be installed manually.
+
 ## 2026-11-27 — 1.0.0 delivery
 
 ### Delivered

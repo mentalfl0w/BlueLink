@@ -27,7 +27,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let model = AppModel()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        guard !MacSparkleUpdaterController.isRunningTests else { return }
         model.start()
+        Task { @MainActor in
+            _ = MacSparkleUpdaterController.shared
+        }
     }
 
     func applicationWillTerminate(_ notification: Notification) {

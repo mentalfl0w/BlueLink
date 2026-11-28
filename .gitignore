@@ -8,4 +8,5 @@ xcuserdata/
 *.xcuserstate
 *.xcresult
 *.profraw
+*.edKey
 .omp/

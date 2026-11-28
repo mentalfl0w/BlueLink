@@ -31,8 +31,9 @@ public struct UpdateRelease: Equatable, Sendable {
     }
 }
 
-/// GitHub Releases check. Disabled unless a repository is configured in the
-/// bundle; the app never invents a remote endpoint. No silent installation.
+/// Manual GitHub Releases fallback. Disabled unless a repository is configured
+/// in the bundle; the app never invents a remote endpoint. Sparkle, not this
+/// checker, owns signed automatic updates.
 public struct UpdateChecker: Sendable {
     public let repository: String?
 

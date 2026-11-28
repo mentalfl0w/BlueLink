@@ -2,6 +2,22 @@
 
 [English](CHANGELOG.md) · [文档索引](README.zh-CN.md)
 
+## 2026-11-28 — Sparkle 签名更新
+
+### 变更
+
+- 通过 Swift Package Manager 集成 Sparkle 2.10.1。`Info.plist` 指向稳定签名更新源 `https://github.com/mentalfl0w/BlueLink/releases/latest/download/appcast.xml`，嵌入 EdDSA 公钥，要求签名更新源，并在解压前校验更新。
+- 在设置中增加“自动检查更新”和“后台自动下载更新”两个显式开关，默认均关闭；Sparkle 在 BlueLink 退出前询问是否安装。没有 Sparkle 密钥的构建仍保留手动 GitHub Releases 检查作为回退。
+- 发布 CI 从 Release ZIP 生成并校验签名 `appcast.xml`，只随稳定版发布。EdDSA 私钥保存在仓库 secret `SPARKLE_EDDSA_PRIVATE_KEY_BASE64`，不提交到仓库。
+- 同步更新中英文 README、贡献指南、产品设计、平台集成、实现说明、决策记录（ADR-019）与本地化。
+- 将 App 版本提升到 1.0.2（build 3），作为首个支持 Sparkle 的版本。
+
+### 验证
+
+- `scripts/prepare-sparkle-release.sh` 已用本地 1.0.1 构建 ZIP 和 EdDSA 公私钥生成签名 appcast；`verify-sparkle-appcast.swift` 校验通过。
+- `xcodebuild` Release 构建与 `scripts/package-dmg.sh` 成功，App 内嵌 Sparkle framework。
+- `./scripts/test.sh` 通过：Core 44 项、Platform 24 项（1 项硬件测试跳过）、App 21 项，边界与文档检查通过。从已发布 appcast 进行真实安装尚未测试。已发布的 1.0.0/1.0.1 早于 Sparkle，首个支持 Sparkle 的版本需要手动安装。
+
 ## 2026-11-27 — 1.0.0 实现交付
 
 ### 交付内容

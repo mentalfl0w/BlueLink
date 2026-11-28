@@ -46,6 +46,7 @@ BlueLink 刻意保持小巧。它只管理你明确选择的设备，只响应�
 - **手动控制。** 在菜单栏面板中连接、断开、重试或暂停设备。暂停跨重启保留；手动断开后，当前亮屏周期内不再自动连接。
 - **可选音频输出。** 选择首选输出设备后，BlueLink 在连接成功时切换一次，不覆盖用户之后的系统选择。
 - **本地优先诊断。** 最近事件只保存在本机；导出前移除蓝牙地址和用户路径。
+- **签名更新。** Sparkle 检查经签名的 GitHub appcast；自动检查和后台下载默认关闭，安装前会确认并可在退出时进行。
 - **中英文完整界面。** 菜单栏、设置与关于页均提供英文和简体中文。
 
 ## 决策方式
@@ -113,7 +114,7 @@ swift test --package-path Platform/MacIntegration --filter RealDeviceTests
 |---|---|
 | Core（`Packages/BlueLinkCore`） | 44 项测试通过 |
 | Platform（`Platform/MacIntegration`） | 24 项执行：23 项通过，1 项硬件测试默认跳过 |
-| App（`Apps/MacApp`） | 19 项通过（状态呈现、本地化、窗口与快照） |
+| App（`Apps/MacApp`） | 21 项通过（状态呈现、本地化、Sparkle 配置、窗口与快照） |
 | 实机 M01 | 通过：已配对测试设备的手动连接、断开与再次连接，5.976 s |
 | 分发 | ad-hoc 本地 DMG/ZIP + SHA256；未 Developer ID 签名、未公证 |
 
@@ -132,7 +133,8 @@ swift test --package-path Platform/MacIntegration --filter RealDeviceTests
 ## 已知限制
 
 - macOS 管控菜单栏溢出；菜单栏过满时 BlueLink 图标可能被隐藏。
-- 更新检查读取 `mentalfl0w/BlueLink` 最新的公开 GitHub Release；不会自动下载或安装更新。
+- 更新使用经签名的 GitHub appcast 与 Sparkle。自动检查和下载默认关闭；开启后 Sparkle 可在后台下载，并在 BlueLink 退出前询问是否安装。App 仍为 ad-hoc 签名，未公证。
+- 已发布的 1.0.0 与 1.0.1 早于 Sparkle 集成；首个支持 Sparkle 的版本（1.0.2 或更高）需要手动安装，之后才可通过 Sparkle 自动更新。
 - ad-hoc 签名不是分发签名。Gatekeeper 仍会提示，签名变化可能导致蓝牙授权重置。
 - 仅管理经典蓝牙设备；仅支持 BLE/GATT 的设备不保证支持经典连接接口。
 

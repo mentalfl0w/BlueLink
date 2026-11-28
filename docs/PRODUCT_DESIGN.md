@@ -14,7 +14,7 @@ Prefer system materials and controls. Do not fill the screen with glass cards, b
 
 **Settings:** use the system Settings scene.
 - Devices: paired-device list, independent policy toggles, preferred output, remove management.
-- General: launch at login, global management, updates.
+- General: launch at login, global management, and updates. Updates use the signed Sparkle feed; automatic checks and background downloads are opt-in toggles, and installation is confirmed before quitting.
 - About: icon, version, project/license, author.
 - Diagnostics: actual vs desired state, display/system state, recent errors, sanitized export.
 
@@ -22,7 +22,7 @@ The daily panel needs no long explanation. Give prompt feedback and never show a
 
 **First run:** do not take over a device. Add → request the necessary permission → show paired devices → user selects → confirm policy → reconcile. Hide input devices by default or show a strong warning; never manage the user's primary input device without confirmation. Support cancel. Removing management does not unpair the device. Global pause does not change the current connection. A manual disconnect says "won't reconnect automatically during this wake cycle"; pause persists.
 
-**Copy:** Connect on display wake / Disconnect on display sleep / Reconnect automatically / Disconnect on system sleep / Pause automation / Connecting… / Connected / Waiting for device / Retry / Launch at login / Check for updates. Do not expose internal class names, error codes, or the term "state convergence" in the UI; keep those in diagnostics if necessary. Use `Localizable.xcstrings` and `InfoPlist.xcstrings` with complete zh-Hans/en values. If Japanese is added, it must be complete. Use generic "Bluetooth device" wording, not a specific device category.
+**Copy:** Connect on display wake / Disconnect on display sleep / Reconnect automatically / Disconnect on system sleep / Pause automation / Connecting… / Connected / Waiting for device / Retry / Launch at login / Check for Updates… / Check for updates automatically / Automatically download updates. Automatic downloads are off by default; Sparkle may download in the background and asks before installing when the app quits. Do not expose internal class names, error codes, or the term "state convergence" in the UI; keep those in diagnostics if necessary. Use `Localizable.xcstrings` and `InfoPlist.xcstrings` with complete zh-Hans/en values. If Japanese is added, it must be complete. Use generic "Bluetooth device" wording, not a specific device category.
 
 The menu bar list sizes itself from the managed device count (72–322 pt) and scrolls beyond that. If the engine state is not ready, show a loading placeholder instead of collapsing to an empty middle.
 

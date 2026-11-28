@@ -46,6 +46,7 @@ Screenshots are offscreen renders of the real SwiftUI views. The test target pro
 - **Manual control.** Connect, disconnect, retry, or pause a device from the menu bar. Pause persists across launches; a manual disconnect suppresses automation until the next real wake cycle.
 - **Optional audio routing.** Choose a preferred output device. BlueLink applies it once after a successful connection and never fights later manual changes.
 - **Local-first diagnostics.** Recent events stay on the Mac. Exported logs redact Bluetooth addresses and user paths.
+- **Signed updates.** Sparkle checks the signed GitHub appcast; automatic checks and background downloads are opt-in, and installation is confirmed before quitting.
 - **English and Simplified Chinese.** The full interface ships in both languages.
 
 ## How it decides
@@ -113,7 +114,7 @@ Run it only for a device you are authorized to connect and disconnect.
 |---|---|
 | Core (`Packages/BlueLinkCore`) | 44 tests pass |
 | Platform (`Platform/MacIntegration`) | 24 tests run: 23 pass, 1 hardware test skipped by default |
-| App (`Apps/MacApp`) | 19 tests pass (presentation, localization, window and snapshot tests) |
+| App (`Apps/MacApp`) | 21 tests pass (presentation, localization, Sparkle configuration, window and snapshot tests) |
 | Real hardware M01 | Passed: manual connect, disconnect, and reconnect of a paired test device, 5.976 s |
 | Distribution | Ad-hoc local DMG/ZIP, SHA256; not Developer ID signed or notarized |
 
@@ -132,7 +133,8 @@ Display sleep/wake, system sleep, dark wake, long-idle recovery, login-item rest
 ## Limitations
 
 - macOS controls menu-bar overflow. On a crowded menu bar, the BlueLink item can be hidden.
-- The update checker reads the latest public GitHub Release from `mentalfl0w/BlueLink`; it never downloads or installs an update automatically.
+- Updates use a signed GitHub appcast and Sparkle. Automatic checks and downloads are off by default; when enabled, Sparkle may download in the background and asks before installing when BlueLink quits. The app is still ad-hoc signed, not notarized.
+- The published 1.0.0 and 1.0.1 releases predate Sparkle. Install the first Sparkle-enabled release (1.0.2 or later) manually; later releases can update through Sparkle.
 - Ad-hoc signatures are not distribution signatures. Gatekeeper still prompts, and Bluetooth authorization may reset when the signature changes.
 - The app manages classic Bluetooth devices. BLE/GATT-only devices are not guaranteed to support the classic connection APIs.
 

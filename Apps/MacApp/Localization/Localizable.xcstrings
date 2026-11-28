@@ -1737,6 +1737,76 @@
           }
         }
       }
+    },
+    "Check for Updates…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "检查更新…"
+          }
+        }
+      }
+    },
+    "Uses the signed GitHub update feed. No account or telemetry is sent.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用经过签名的 GitHub 更新源，不发送账号信息或遥测数据。"
+          }
+        }
+      }
+    },
+    "Check for updates automatically": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动检查更新"
+          }
+        }
+      }
+    },
+    "Checks the signed feed at most once a day while BlueLink is running.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BlueLink 运行时每天最多检查一次经过签名的更新源。"
+          }
+        }
+      }
+    },
+    "Automatically download updates": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动下载更新"
+          }
+        }
+      }
+    },
+    "Sparkle downloads the signed update in the background and asks before installing it when BlueLink quits.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sparkle 会在后台下载经过签名的更新，并在 BlueLink 退出前询问是否安装。"
+          }
+        }
+      }
+    },
+    "This build has no Sparkle update key. It can check GitHub Releases only.": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此构建没有 Sparkle 更新密钥，只能检查 GitHub Releases。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

@@ -28,4 +28,6 @@ Apple 官方： [IOBluetooth](https://developer.apple.com/documentation/ioblueto
 
 CoreAudio HAL：枚举输出设备、监听设备列表与默认输出变更、读取 AudioDeviceUID、传输类型和输出能力，验证匹配。没有可靠蓝牙地址映射时让用户选定 UID，不能凭名称强配。用 kAudioHardwarePropertyDefaultOutputDevice 等公开属性设置默认输出，失败独立显示。SMAppService.mainApp 注册/注销、查询状态、处理 requiresApproval；不手工 LaunchDaemon。
 
+更新使用 Sparkle 2.10.1 的 EdDSA 签名 appcast，经 HTTPS 获取；公钥写入 `Info.plist`，私钥只保存在 CI secret。`SURequireSignedFeed` 与 `SUVerifyUpdateBeforeExtraction` 阻止未签名或被篡改的更新被解压。不要另加自定义下载器或安装路径。
+
 OSLog 分类 system/bluetooth/coordinator/audio/update，使用隐私修饰或短化标识。诊断只从正常界面展示/导出脱敏的状态和最近有界记录。不得上传日志或读取私有数据库。

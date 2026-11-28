@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		079966190F566596ABDBEEF5 /* SparkleConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C74A68E79BCECF52C81C92 /* SparkleConfigurationTests.swift */; };
 		0C978837FB4EE2732017A0C9 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DE7C599B90066C7615E6D4 /* LocalizationTests.swift */; };
 		20D98FDBAC963735A28B58CD /* DevicesSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D91277D4E74B167F3D7497 /* DevicesSettingsView.swift */; };
 		26F91563472D211E94A8AAF7 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C209E9D782289831021EFF65 /* InfoPlist.xcstrings */; };
@@ -17,6 +18,7 @@
 		441A6F170DBF529ABD1FE180 /* MacIntegration in Frameworks */ = {isa = PBXBuildFile; productRef = FD6D4E6FC91FD22B3D137ABE /* MacIntegration */; };
 		44DBFE0DCF6ECB710E594890 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F5E7568F8C50D58F700968 /* SettingsView.swift */; };
 		5CD737B58DD3B6439A628CFD /* DeviceStatusPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E7EA08561DEF9D0AFE54A0 /* DeviceStatusPresentationTests.swift */; };
+		717A7B315011F9B74CBFA52B /* MacSparkleUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE89DC3CAD71A4A353B30C /* MacSparkleUpdater.swift */; };
 		77DBBB46B8EFC7FFE1F47BA5 /* BlueLinkMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0BF382A9296B1994523C35 /* BlueLinkMacApp.swift */; };
 		7CBB1E00B37F1C69F5CFA86B /* DiagnosticsPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379F83A9FD4756EC8E14B701 /* DiagnosticsPresentation.swift */; };
 		8E419246FFCCA3AC1528A228 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E7199DD426BDCAA04247CC /* AppModel.swift */; };
@@ -27,6 +29,7 @@
 		C0C678D215D743153B2B399B /* WindowFrosting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13AF5B6E90C68FFBC1DA79D /* WindowFrosting.swift */; };
 		C502E6678B2B1E432F375BF1 /* MenuBarPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A364588B6B112E17E828A5 /* MenuBarPanel.swift */; };
 		CE95F607420C5928789BCABC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 8C7D5BA1D1C6184C94FE3AFB /* AppIcon.icon */; };
+		D1D2CC144AF1B58C64417624 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 766F75216E00279790D8FAA7 /* Sparkle */; };
 		E6653E4EB33FE6699219C0AA /* UISnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87BDCFA13DE33CC3C11DFE /* UISnapshotTests.swift */; };
 		EB7B757DF46A3131E0375E15 /* BlueLinkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 97409555E1E100E822158366 /* BlueLinkCore */; };
 /* End PBXBuildFile section */
@@ -44,7 +47,9 @@
 /* Begin PBXFileReference section */
 		02D91277D4E74B167F3D7497 /* DevicesSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesSettingsView.swift; sourceTree = "<group>"; };
 		06DE7C599B90066C7615E6D4 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
+		0DBE89DC3CAD71A4A353B30C /* MacSparkleUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacSparkleUpdater.swift; sourceTree = "<group>"; };
 		0F5C694C5664F3231F43A7E8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		11C74A68E79BCECF52C81C92 /* SparkleConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkleConfigurationTests.swift; sourceTree = "<group>"; };
 		1436DC9482A56DED8C27AEEA /* BlueLinkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlueLinkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D2951017051963C8B9B271A /* DeviceStatusPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStatusPresentation.swift; sourceTree = "<group>"; };
 		2261A64C79026BB87BE2E71E /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -82,6 +87,7 @@
 			files = (
 				BA3BA4B5818225EC5537A1CE /* BlueLinkCore in Frameworks */,
 				441A6F170DBF529ABD1FE180 /* MacIntegration in Frameworks */,
+				D1D2CC144AF1B58C64417624 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +100,7 @@
 				D3E7199DD426BDCAA04247CC /* AppModel.swift */,
 				1D2951017051963C8B9B271A /* DeviceStatusPresentation.swift */,
 				379F83A9FD4756EC8E14B701 /* DiagnosticsPresentation.swift */,
+				0DBE89DC3CAD71A4A353B30C /* MacSparkleUpdater.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -130,6 +137,7 @@
 			children = (
 				38E7EA08561DEF9D0AFE54A0 /* DeviceStatusPresentationTests.swift */,
 				06DE7C599B90066C7615E6D4 /* LocalizationTests.swift */,
+				11C74A68E79BCECF52C81C92 /* SparkleConfigurationTests.swift */,
 				7C87BDCFA13DE33CC3C11DFE /* UISnapshotTests.swift */,
 			);
 			path = Tests;
@@ -220,6 +228,7 @@
 			packageProductDependencies = (
 				12F8E9AA94A520FB91F55492 /* BlueLinkCore */,
 				FD6D4E6FC91FD22B3D137ABE /* MacIntegration */,
+				766F75216E00279790D8FAA7 /* Sparkle */,
 			);
 			productName = BlueLink;
 			productReference = E0E26BCA2CA537F65E0095A7 /* BlueLink.app */;
@@ -255,6 +264,7 @@
 			mainGroup = D677CDBB3BABC86FF8F4AFF7;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				0A28238498A59C58C7121A15 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				1E2F90653D99F1DDB8003F34 /* XCLocalSwiftPackageReference "Packages/BlueLinkCore" */,
 				2A22C2C41F5C247A2729CD9A /* XCLocalSwiftPackageReference "Platform/MacIntegration" */,
 			);
@@ -296,6 +306,7 @@
 				20D98FDBAC963735A28B58CD /* DevicesSettingsView.swift in Sources */,
 				7CBB1E00B37F1C69F5CFA86B /* DiagnosticsPresentation.swift in Sources */,
 				A497D9E13C97D2A4871D457F /* DiagnosticsView.swift in Sources */,
+				717A7B315011F9B74CBFA52B /* MacSparkleUpdater.swift in Sources */,
 				C502E6678B2B1E432F375BF1 /* MenuBarPanel.swift in Sources */,
 				44DBFE0DCF6ECB710E594890 /* SettingsView.swift in Sources */,
 				2B42DDD2420C269B2389E284 /* SettingsWindowPresenter.swift in Sources */,
@@ -309,6 +320,7 @@
 			files = (
 				5CD737B58DD3B6439A628CFD /* DeviceStatusPresentationTests.swift in Sources */,
 				0C978837FB4EE2732017A0C9 /* LocalizationTests.swift in Sources */,
+				079966190F566596ABDBEEF5 /* SparkleConfigurationTests.swift in Sources */,
 				E6653E4EB33FE6699219C0AA /* UISnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,7 +425,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = NO;
@@ -430,7 +442,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -478,7 +490,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = NO;
@@ -501,7 +513,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -574,10 +586,26 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		0A28238498A59C58C7121A15 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = exactVersion;
+				version = 2.10.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		12F8E9AA94A520FB91F55492 /* BlueLinkCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BlueLinkCore;
+		};
+		766F75216E00279790D8FAA7 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A28238498A59C58C7121A15 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		97409555E1E100E822158366 /* BlueLinkCore */ = {
 			isa = XCSwiftPackageProductDependency;

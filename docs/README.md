@@ -29,7 +29,7 @@ Every maintained guide has an English primary file and a Simplified Chinese pair
 ./scripts/package-dmg.sh
 ```
 
-Current result: 44 Core tests pass; 24 Platform tests run with 23 passing and one hardware test skipped by design; 19 App tests pass; boundary and documentation checks pass. Hardware M01 passes separately. See [Verification](VERIFICATION.md) for the environment and evidence.
+Current result: 44 Core tests pass; 24 Platform tests run with 23 passing and one hardware test skipped by design; 21 App tests pass; boundary and documentation checks pass. Hardware M01 passes separately. See [Verification](VERIFICATION.md) for the environment and evidence.
 
 ## Screenshots
 

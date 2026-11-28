@@ -48,7 +48,7 @@ Implement `CONNECTION_POLICY` in Core with a fake clock and Bluetooth client. Co
 
 ## Phase C — productization
 
-Complete Settings, permission and launch-at-login handling, optional preferred audio (off by default), localization, diagnostics, native appearance, real Icon Composer icon, and menu bar template. Exercise the full UI once; save real screenshots when available. Update checks stay disabled until a release repository is configured; use the GitHub Releases API with semantic version comparison and explicit network/error states. Do not invent remote URLs, versions, or release state. An ad-hoc build may offer a release download link but must not silently replace itself. Automatic installation requires signing and update-security prerequisites, with a separate ADR.
+Complete Settings, permission and launch-at-login handling, optional preferred audio (off by default), localization, diagnostics, native appearance, real Icon Composer icon, and menu bar template. Exercise the full UI once; save real screenshots when available. Updates use Sparkle 2.10.1 against a signed stable GitHub appcast; automatic checks and downloads are off until the user enables them. The manual GitHub Releases checker remains a fallback for builds without a Sparkle key. Do not invent remote URLs, versions, or release state. CI generates and validates the signed appcast from the release ZIP; an ad-hoc build is not a Developer ID distribution build. See ADR-019.
 
 ## Phase D — QA and delivery
 
@@ -60,7 +60,7 @@ Run the applicable tests in [Verification](VERIFICATION.md). Measure idle CPU, m
 |---|---|---|
 | Phase A | Complete | Environment/API probes; XcodeGen project generates and builds; `.icon` compiles and renders all appearances; Core/Platform packages and tests run |
 | Phase B | Complete | Policy table, coordinator, retry, configuration, IOBluetooth/display/system adapters; device selection, manual actions, pause; 44 Core + 24 Platform tests (one hardware test skipped) |
-| Phase C | Complete | Settings, login item, audio routing, diagnostics, update-check placeholder, English/Chinese UI, real icon, menu bar template, frosted Settings/Add Device windows; 19 App tests |
+| Phase C | Complete | Settings, login item, audio routing, diagnostics, Sparkle update controls, English/Chinese UI, real icon, menu bar template, frosted Settings/Add Device windows; 21 App tests |
 | Phase D | Complete within documented limits | `./scripts/test.sh` green; hardware M01 passed; DMG/ZIP + SHA256 generated and mounted; bilingual docs updated |
 
 Not tested on hardware: display sleep/wake and sleep (M02–M07, M10), login-item restart (M11), other input devices (M12), actual audio output (M13), Finder/Dock small icon sizes (M14), and idle-resource sampling (M15). The ad-hoc artifact is not a distribution signature, is not notarized, and is not published.
