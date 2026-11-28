@@ -20,7 +20,13 @@ DIST="$ROOT/dist"
 mkdir -p "$DIST"
 
 STAGE="$(mktemp -d "${TMPDIR:-/tmp}/bluelink-dmg.XXXXXX")"
-cp -R "$APP" "$STAGE/BlueLink.app"
+trap 'rm -rf "$STAGE"' EXIT
+# Copy without source/File Provider metadata, then re-sign the clean bundle.
+# This keeps the ad-hoc distribution signature valid even when the checkout
+# lives on a File Provider-backed volume.
+ditto --norsrc --noextattr "$APP" "$STAGE/BlueLink.app"
+xattr -cr "$STAGE/BlueLink.app"
+codesign --force --deep --sign - --timestamp=none "$STAGE/BlueLink.app"
 ln -s /Applications "$STAGE/Applications"
 
 DMG="$DIST/BlueLink-$VERSION-$BUILD.dmg"
@@ -33,7 +39,7 @@ hdiutil create \
   -ov -format UDZO \
   "$DMG" >/dev/null
 
-ditto -c -k --keepParent "$APP" "$ZIP"
+ditto -c -k --keepParent "$STAGE/BlueLink.app" "$ZIP"
 
 (
   cd "$DIST"
