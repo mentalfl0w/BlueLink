@@ -36,7 +36,7 @@ final class UISnapshotTests: XCTestCase {
         for (localeID, suffix) in [("en", "en"), ("zh-Hans", "zh")] {
             let model = AppModel()
             let locale = Locale(identifier: localeID)
-            let size = CGSize(width: 580, height: 470)
+            let size = CGSize(width: 580, height: 560)
 
             let general = GeneralSettingsView()
                 .environment(model)

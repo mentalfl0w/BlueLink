@@ -13,6 +13,8 @@ final class LocalizationTests: XCTestCase {
         XCTAssertEqual(String(localized: "Couldn't connect.", bundle: .main, locale: zhHans), "无法连接。")
         XCTAssertEqual(String(localized: "Waiting for the display", bundle: .main, locale: zhHans), "等待显示屏")
         XCTAssertEqual(String(localized: "Recent events", bundle: .main, locale: zhHans), "最近事件")
+        XCTAssertEqual(String(localized: "Check for updates automatically", bundle: .main, locale: zhHans), "自动检查更新")
+        XCTAssertEqual(String(localized: "Automatically download updates", bundle: .main, locale: zhHans), "自动下载更新")
     }
 
     func testInterpolatedStatusStrings() {

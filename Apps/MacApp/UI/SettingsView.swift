@@ -15,7 +15,7 @@ struct SettingsView: View {
             AboutView()
                 .tabItem { Label("About", systemImage: "info.circle") }
         }
-        .frame(width: 580, height: 470)
+        .frame(width: 580, height: 560)
         .blueLinkWindowFrosting()
         .background(SettingsWindowAccessor())
         .task { model.refresh() }
@@ -24,6 +24,8 @@ struct SettingsView: View {
 
 struct GeneralSettingsView: View {
     @Environment(AppModel.self) private var model
+    @State private var automaticChecksForUpdates = false
+    @State private var automaticallyDownloadsUpdates = false
 
     var body: some View {
         Form {
@@ -82,33 +84,69 @@ struct GeneralSettingsView: View {
             }
 
             Section {
-                HStack {
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text("Check for Updates")
-                        Text(model.isUpdateCheckConfigured
-                             ? LocalizedStringKey("Checks GitHub Releases. Nothing is downloaded or installed automatically.")
-                             : LocalizedStringKey("Update checks stay off until a release repository is configured."))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                    Button(model.isCheckingForUpdates ? LocalizedStringKey("Checking…") : LocalizedStringKey("Check Now")) {
-                        Task { await model.checkForUpdates() }
-                    }
-                    .disabled(model.isCheckingForUpdates || !model.isUpdateCheckConfigured)
-                }
-
-                if let message = model.updateMessage {
+                if MacSparkleUpdaterController.shared.isConfigured {
                     HStack {
-                        Text(message)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("Check for Updates")
+                            Text("Uses the signed GitHub update feed. No account or telemetry is sent.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
                         Spacer()
-                        if model.availableUpdate != nil {
-                            Button("Open Release Page") {
-                                model.openUpdatePage()
+                        Button("Check for Updates…") {
+                            MacSparkleUpdaterController.shared.checkForUpdates()
+                        }
+                    }
+
+                    Toggle(isOn: $automaticChecksForUpdates) {
+                        Text("Check for updates automatically")
+                        Text("Checks the signed feed at most once a day while BlueLink is running.")
+                    }
+                    .onChange(of: automaticChecksForUpdates) { _, isEnabled in
+                        MacSparkleUpdaterController.shared.updater?.automaticallyChecksForUpdates = isEnabled
+                        if !isEnabled {
+                            automaticallyDownloadsUpdates = false
+                            MacSparkleUpdaterController.shared.updater?.automaticallyDownloadsUpdates = false
+                        }
+                    }
+
+                    Toggle(isOn: $automaticallyDownloadsUpdates) {
+                        Text("Automatically download updates")
+                        Text("Sparkle downloads the signed update in the background and asks before installing it when BlueLink quits.")
+                    }
+                    .disabled(!automaticChecksForUpdates)
+                    .onChange(of: automaticallyDownloadsUpdates) { _, isEnabled in
+                        MacSparkleUpdaterController.shared.updater?.automaticallyDownloadsUpdates = isEnabled
+                    }
+                } else {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("Check for Updates")
+                            Text(model.isUpdateCheckConfigured
+                                 ? LocalizedStringKey("This build has no Sparkle update key. It can check GitHub Releases only.")
+                                 : LocalizedStringKey("Update checks stay off until a release repository is configured."))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Button(model.isCheckingForUpdates ? LocalizedStringKey("Checking…") : LocalizedStringKey("Check Now")) {
+                            Task { await model.checkForUpdates() }
+                        }
+                        .disabled(model.isCheckingForUpdates || !model.isUpdateCheckConfigured)
+                    }
+
+                    if let message = model.updateMessage {
+                        HStack {
+                            Text(message)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            if model.availableUpdate != nil {
+                                Button("Open Release Page") {
+                                    model.openUpdatePage()
+                                }
+                                .controlSize(.small)
                             }
-                            .controlSize(.small)
                         }
                     }
                 }
@@ -127,5 +165,10 @@ struct GeneralSettingsView: View {
         }
         .formStyle(.grouped)
         .scrollContentBackground(.hidden)
+        .onAppear {
+            guard let updater = MacSparkleUpdaterController.shared.updater else { return }
+            automaticChecksForUpdates = updater.automaticallyChecksForUpdates
+            automaticallyDownloadsUpdates = updater.automaticallyDownloadsUpdates
+        }
     }
 }
